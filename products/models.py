@@ -8,7 +8,7 @@ class Product(models.Model):
     title = models.CharField(max_length=150)
     price = models.FloatField()
     description = models.TextField()
-    image = models.ImageField(upload_to="media")
+    image = models.ImageField(upload_to="media/")
     priority = models.IntegerField(default=0)
     delete_staus = models.IntegerField(choices=DELETE_CHOICES, default=LIVE)
     create_at = models.DateTimeField(auto_now_add=True)
