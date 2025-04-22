@@ -5,29 +5,39 @@
             <div class="col-2">
                 <img src="{% static 'images/image1.png' %}" width="100%">
             </div>
-            <div class="col-2">
+            <div class="col-2">  
+                {% if messages %}
+                  {% for message in messages %}
+                  <div class="message-container">
+                      <li style="color: red;">{{ message }}</li>    
+                  </div>  
+                    
+                  {% endfor %}
+                {% endif %}
+
                 <div class="form-container">
                     <div class="form-btn">
                         <span onclick="login()">Login</span>
                         <span onclick="register()">Register</span>
                         <hr id="Indicator">
                     </div>
-                    <form id="LoginForm">
+               
+                    <form id="LoginForm" method="POST">
                         {% csrf_token %}
                         <input type="text" name="username" placeholder="Username" required>
-                        <input type="email" name="email" required placeholder="Email">
-                        <input type="password" placeholder="Password">
-                        <button type="submit" class="btn">Login</button>
+                        <input type="password" name="password" placeholder="Password">
+                        <button type="submit" name="login" class="btn">Login</button>
                         <a href="">Forget Password</a>
                     </form>
 
-                    <form id="RegForm">
+                    <form id="RegForm" method="POST">
+                        {% csrf_token %}
                         <input type="text" name="username" maxlength="6" min="3" placeholder="Username">
                         <input type="email" name="email" placeholder="Email">
                         <input type="password" minlength="6" placeholder="Password">
-                        <input type="text" name="number" placeholder="Phone">
-                        <!-- <input type="text" name="address" placeholder="Address"> -->
-                        <button type="submit" class="btn">Register</button>
+                        <input type="text" name="phone" placeholder="Phone">
+                        <input type="text" name="address" placeholder="Address">
+                        <button type="submit" name="register" class="btn">Register</button>
                     </form>
                 </div>
             </div>
