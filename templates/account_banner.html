@@ -9,9 +9,8 @@
                 {% if messages %}
                   {% for message in messages %}
                   <div class="message-container">
-                      <li style="color: red;">{{ message }}</li>    
+                      <li class="{{ message.tags  }}">{{ message }}</li>    
                   </div>  
-                    
                   {% endfor %}
                 {% endif %}
 
@@ -32,9 +31,9 @@
 
                     <form id="RegForm" method="POST">
                         {% csrf_token %}
-                        <input type="text" name="username" maxlength="6" min="3" placeholder="Username">
+                        <input type="text" name="username" maxlength="50" minlength="3" placeholder="Username">
                         <input type="email" name="email" placeholder="Email">
-                        <input type="password" minlength="6" placeholder="Password">
+                        <input type="password" name="password" minlength="6" placeholder="Password">
                         <input type="text" name="phone" placeholder="Phone">
                         <input type="text" name="address" placeholder="Address">
                         <button type="submit" name="register" class="btn">Register</button>

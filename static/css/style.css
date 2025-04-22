@@ -398,6 +398,14 @@ th:last-child{
     overflow: hidden;
 }
 
+.error{
+    color: red;
+}
+
+.success{
+    color: green;
+}
+
 .form-container{
     background: #fff;
     width: 300px;

@@ -10,7 +10,7 @@
         var LoginForm = document.getElementById("LoginForm");
         var RegForm = document.getElementById("RegForm");
         var Indicator = document.getElementById("Indicator");
-        
+
         function register() {
             RegForm.style.transform = "translatex(0px)";
             LoginForm.style.transform = "translatex(0px)";
@@ -24,5 +24,12 @@
 
         }
     </script>
+
+    {% if regitser %}
+      <script>register()</script>
+    {% else %}
+        <script>login()</script> 
+    {% endif %}
+    
     {% endblock %}
 {% endblock content %}
