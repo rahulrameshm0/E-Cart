@@ -5,7 +5,10 @@ from .models import Coustamer
 # Create your views here.
 
 def cart(request):
-    return render(request, 'cart.html')
+    user = request.user
+    customer = user.customer_profile
+    cart = Order.objects.filter(owner=customer, order_status=Order.CART_SATGE).first()
+    return render(request, 'cart.html', {'cart': cart})
 
 
 def add_to_cart(request):
