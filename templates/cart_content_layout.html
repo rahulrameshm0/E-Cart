@@ -2,7 +2,7 @@
 {% load multiply %}
 {% load get_total %}
 <div class="small-container cart-page">
-    {% if cart %}
+    {% if cart %} 
     
     <table>
         <tbody><tr>
@@ -27,6 +27,7 @@
             <td>${% multiply cart_item.product.price  cart_item.quantity %}</td>
         </tr>
         {% endfor %}
+    
     </tbody></table> 
     <div class="total-price">
         <table>

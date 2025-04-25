@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from . models import Order, OderedItem
 from django.contrib import messages
 from products.models import Product
+from django.contrib.auth.decorators import login_required
 from .models import Coustamer  
 # Create your views here.
 
@@ -70,4 +71,17 @@ def remove_item_from_cart(request, pk):
     item.delete()
     return redirect('cart')
 
+@login_required(login_url='account')
+def view_orders(request):
+    user = request.user
+    customer = user.customer_profile
+    cart = Order.objects.filter(owner=customer, order_status=Order.CART_STAGE).first()
+    return render(request, 'cart.html', {'cart': cart})
 
+@login_required(login_url='account')
+def show_orders(request):
+    user = request.user
+    customer = user.customer_profile
+    all_orders = Order.objects.filter(owner = customer).exclude(order_status = Order.CART_STAGE)
+    context = {'orders':all_orders}
+    return render(request, 'orders.html', context) 

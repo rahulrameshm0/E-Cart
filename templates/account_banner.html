@@ -12,8 +12,8 @@
                       <li class="{{ message.tags  }}">{{ message }}</li>    
                   </div>  
                   {% endfor %}
-            </div>
-                {% endif %}
+                <!-- </div> -->
+                  {% endif %}
 
                 <div class="form-container">
                     <div class="form-btn">
@@ -24,6 +24,7 @@
                
                     <form id="LoginForm" method="POST">
                         {% csrf_token %}
+                        <input type="hidden" name="action" value="login">
                         <input type="text" name="username" placeholder="Username" required>
                         <input type="password" name="password" placeholder="Password">
                         <button type="submit" name="login" class="btn">Login</button>
@@ -32,6 +33,7 @@
 
                     <form id="RegForm" method="POST">
                         {% csrf_token %}
+                        <input type="hidden" name="action" value="register">
                         <input type="text" name="username" maxlength="50" minlength="3" placeholder="Username">
                         <input type="email" name="email" placeholder="Email">
                         <input type="password" name="password" minlength="6" placeholder="Password">
