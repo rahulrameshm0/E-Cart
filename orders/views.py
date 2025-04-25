@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 def cart(request):
     user = request.user
     customer = user.customer_profile
-    cart = Order.objects.filter(owner=customer, order_status=Order.CART_SATGE).first()
+    cart = Order.objects.filter(owner=customer, order_status=Order.CART_STAGE).first()
     return render(request, 'cart.html', {'cart': cart})
    
 
@@ -20,9 +20,9 @@ def add_to_cart(request):
         product_id = request.POST.get('product_id')
 
         # Get or create cart
-        cart_obj = Order.objects.filter(owner=customer, order_status=Order.CART_SATGE).first()
+        cart_obj = Order.objects.filter(owner=customer, order_status=Order.CART_STAGE).first()
         if not cart_obj:
-            cart_obj = Order.objects.create(owner=customer, order_status=Order.CART_SATGE)
+            cart_obj = Order.objects.create(owner=customer, order_status=Order.CART_STAGE)
 
         product = Product.objects.get(pk=product_id)
 
