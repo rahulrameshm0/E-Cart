@@ -49,7 +49,7 @@ def checkout_cart(request):
 
             order_obj = Order.objects.filter(
                 owner=customer,
-                order_status=Order.CART_SATGE 
+                order_status=Order.CART_STAGE
             ).first()
 
             if order_obj:
