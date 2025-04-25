@@ -5,13 +5,14 @@ from products.models import Product
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 
+
 def cart(request):
     user = request.user
     customer = user.customer_profile
     cart = Order.objects.filter(owner=customer, order_status=Order.CART_STAGE).first()
     return render(request, 'cart.html', {'cart': cart})
    
-
+@login_required(login_url='account')
 def add_to_cart(request):
     if request.method == "POST":
         user = request.user
@@ -40,6 +41,8 @@ def add_to_cart(request):
 
     return redirect('cart')
 
+
+@login_required(login_url='account')
 def checkout_cart(request):
     if request.method == "POST":
         try:
@@ -65,6 +68,7 @@ def checkout_cart(request):
 
     return redirect('cart')
 
+@login_required(login_url='account')
 def remove_item_from_cart(request, pk):
     item = get_object_or_404(OderedItem, pk=pk)
     item.delete()
