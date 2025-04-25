@@ -1,5 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from . models import Order, OderedItem
+from django.contrib import messages
 from products.models import Product
 from .models import Coustamer  
 # Create your views here.
@@ -10,31 +11,6 @@ def cart(request):
     cart = Order.objects.filter(owner=customer, order_status=Order.CART_SATGE).first()
     return render(request, 'cart.html', {'cart': cart})
    
-
-
-# def add_to_cart(request):
-#     if request.POST:
-#         user = request.user
-#         customer = user.customer_profile
-#         quantity = int(request.POST.get('quantity'))
-#         product_id = request.POST.get('product_id')
-#         cart_obj, created = Order.objects.get_or_create(
-#             owner = customer,
-#             order_status = Order.CART_SATGE
-#         )
-#         product = Product.objects.get(pk=product_id)
-#         ordered_item, created = OderedItem.objects.get_or_create(
-#             product = product,
-#             owner = cart_obj,
-#             # quantity = quantity
-#         )
-#         if created:
-#             ordered_item.quantity = quantity
-#             ordered_item.save()
-#         else:
-#             ordered_item.quantity = ordered_item.quantity + quantity
-#             ordered_item.save()
-#     return redirect('cart')
 
 def add_to_cart(request):
     if request.method == "POST":
@@ -63,3 +39,35 @@ def add_to_cart(request):
             )
 
     return redirect('cart')
+
+def checkout_cart(request):
+    if request.method == "POST":
+        try:
+            user = request.user
+            customer = user.customer_profile
+            total = float(request.POST.get('total'))
+
+            order_obj = Order.objects.filter(
+                owner=customer,
+                order_status=Order.CART_SATGE 
+            ).first()
+
+            if order_obj:
+                order_obj.order_status = Order.ORDER_CONFIRMED
+                order_obj.total_price = total
+                order_obj.save()
+                messages.success(request, "Your order is processed.")
+            else:
+                messages.warning(request, "No order found to process.")
+        except Exception as e:
+            print("Checkout Error:", e)
+            messages.error(request, f"Error: {e}")
+
+    return redirect('cart')
+
+def remove_item_from_cart(request, pk):
+    item = get_object_or_404(OderedItem, pk=pk)
+    item.delete()
+    return redirect('cart')
+
+
