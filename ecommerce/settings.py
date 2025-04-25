@@ -29,7 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['red-store-3jfj.onrender.com', '127.0.0.1', 'localhost']
 
-
+CSRF_TRUSTED_ORIGINS = ['https://red-store-3jfj.onrender.com']
 # Application definition
 
 INSTALLED_APPS = [
