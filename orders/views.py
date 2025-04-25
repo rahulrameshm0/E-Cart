@@ -3,7 +3,6 @@ from . models import Order, OderedItem
 from django.contrib import messages
 from products.models import Product
 from django.contrib.auth.decorators import login_required
-from .models import Coustamer  
 # Create your views here.
 
 def cart(request):
