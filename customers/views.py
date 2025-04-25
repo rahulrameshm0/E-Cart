@@ -19,36 +19,39 @@ def show_account(request):
             phone = request.POST.get('phone')
             address = request.POST.get('address')
 
-            #Create User Account
+            # Check if username already exists
+            if User.objects.filter(username=username).exists():
+                messages.error(request, "This username already exists!")
+                return render(request, 'account.html', context)
+
+            # Create User
             user = User.objects.create_user(
                 username=username,
                 password=password,
                 email=email,
-                address=address
-                )
-            
-            #Create coustomer account
-
-            coustamer = Coustamer.objects.create(
-                user = user,
-                phone=phone,
             )
-            success_message = "User registration successful!"
-            messages.success(request, success_message)
-        except Exception as e:
-            error = "This username already exists!"
-            messages.error(request, error)
 
-    if request.POST and 'login' in request.POST:
+            # Create Coustamer with extra fields
+            coustamer = Coustamer.objects.create(
+                user=user,
+                phone=phone,
+                address=address 
+            )
+
+            messages.success(request, "User registration successful!")
+
+        except Exception as e:
+            messages.error(request, f"Registration failed: {e}")
+
+    elif request.POST and 'login' in request.POST:
         context['register'] = False
-        print(request.POST)
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
-        print(user)
         if user:
             login(request, user)
-            return redirect('home') 
+            return redirect('home')
         else:
-            messages.error(request, "Inavild username or password")
-    return render(request, 'account.html', context) 
+            messages.error(request, "Invalid username or password")
+
+    return render(request, 'account.html', context)
