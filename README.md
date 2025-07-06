@@ -75,7 +75,7 @@ python manage.py runserver
 📸 Screenshots (optional)
 Add screenshots of your project here to showcase the UI and features.
 
-🙋‍♂️ About Me
+## 🙋‍♂️ About Me
 Rahul Ramesh
 Aspiring Python Backend Developer
 📧 rahulrameshm98@gmail.com
